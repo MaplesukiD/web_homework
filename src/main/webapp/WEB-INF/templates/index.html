@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    .div_container{
+      width: auto;
+      height: 550px;
+      background: honeydew;
+    }
+    body{
+      margin:0;
+      padding:0;
+      background-color:#808080;
+    }
+
+    .div_fruit_list{
+      width:100%;
+      border:0 solid red;
+    }
+    #tbl_fruit{
+      width:60%;
+      line-height:28px;
+      margin-top:1px;
+      margin-left:20%;
+    }
+    #tbl_fruit , #tbl_fruit tr , #tbl_fruit th , #tbl_fruit td{
+      border:1px solid gray;
+      border-collapse:collapse;
+      text-align:center;
+      font-size:16px;
+      font-family: "黑体", serif;
+      font-weight:lighter;
+
+    }
+    .w20{
+      width: 15%;
+    }
+    .w21{
+      width: 15% ;
+    }
+    .w22{
+      width: 15%;
+    }
+    .w23{
+      width: 40% ;
+    }
+
+    .add{
+      text-align: right;
+      width: 60%;
+      line-height:27px;
+      margin-left: 20%;
+      padding-bottom: 1px;
+      padding-top:5px;
+    }
+  </style>
+</head>
+<body>
+<div class="div_container">
+  <div class="div_fruit_list">
+    <p class="title" style="text-align: center;font-size: x-large" >欢迎使用水果库存后台管理系统</p>
+    <div class="add">
+      <a th:href="@{/add}">
+        <button class="btn btn-xs btn-primary">新增</button>
+      </a>
+    </div>
+    <table id="tbl_fruit">
+      <tr>
+        <th class="w20" >名称</th>
+        <th class="w21" >单价</th>
+        <th class="w22" >库存</th>
+        <th class="w23" >信息</th>
+        <th>操作</th>
+      </tr>
+      <tr th:if="${#lists.isEmpty(session.fruitList)}">
+        <td colspan="6">对不起，库存为空</td>
+      </tr>
+      <tr th:unless="${#lists.isEmpty(session.fruitList)}" th:each="fruit:${session.fruitList}">
+        <td th:text="${fruit.name}"></td>
+        <td th:text="${fruit.price}"></td>
+        <td th:text="${fruit.count}"></td>
+        <td th:text="${fruit.remark}"></td>
+        <td>
+          <a th:href="@{/update(id=${fruit.id})}" style="padding-right: 1px; ">
+            <button class="btn btn-xs btn-warning">修改</button>
+          </a>
+          <a th:href="@{/delete(id=${fruit.id})} " style="padding-left: 1px">
+          <button class="btn btn-xs btn-danger">删除</button>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
